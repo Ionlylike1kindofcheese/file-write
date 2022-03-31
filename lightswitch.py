@@ -1,3 +1,4 @@
+import os.path
 import tkinter as tk
 window = tk.Tk()
 
@@ -19,11 +20,15 @@ def showMsg():
         button.config(text="Switch light " + lightstatus)
         lightstatus = "off"
         window.config(bg="black")
-    logfile = open('actions.log', 'a')
-    writevar = ("Light is " + lightstatus)
-    logfile.write(writevar)
-    logfile.write('\n')
-    logfile.close()
+    existenceFile = os.path.exists('actions.log')
+    if existenceFile == False:
+        secondparameter = 'x'
+    elif existenceFile == True:
+        secondparameter = 'a'
+    with open('actions.log', secondparameter) as logfile:
+        writevar = ("Light is " + lightstatus)
+        logfile.write(writevar)
+        logfile.write('\n')
         
 button.config(command=showMsg)
     
